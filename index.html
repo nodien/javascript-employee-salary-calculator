@@ -22,7 +22,7 @@
 
     <button onclick="calculateSalary()">Tính lương</button><br>
 
-    <h3>Lương tổng: <span id="totalSalary">0</span> VNĐ</h3>
+    <h3>Lương tổng: <span id="totalSalary">0</span></h3>
 </div>
 
 <script>
@@ -67,8 +67,9 @@
             seniorityBonus = 0.10;
         }
 
+        // https://www.w3schools.com/jsref/jsref_tolocalestring_number.asp - quite fun using this :)))
         let totalSalary = baseSalary * (1 + seniorityBonus);
-        document.getElementById('totalSalary').innerText = totalSalary.toLocaleString('vi-VN');
+        document.getElementById('totalSalary').innerText = totalSalary.toLocaleString("vi-VN", {style:"currency", currency:"VND"});
     }
 </script>
 </body>
