@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính Lương Nhân Viên</title>
+</head>
+<body>
+<div>
+    <h2>Tính Lương Nhân Viên</h2>
+
+    <label for="morningHours">Giờ làm ca sáng:</label><input type="number" id="morningHours" min="0" value="0"><br><br>
+
+
+    <label for="afternoonHours">Giờ làm ca chiều:</label><input type="number" id="afternoonHours" min="0" value="0"><br><br>
+
+
+    <label for="nightHours">Giờ làm ca đêm:</label><input type="number" id="nightHours" min="0" value="0"><br><br>
+
+
+    <label for="experience">Số năm làm việc:</label><input type="number" id="experience" min="0" value="0"><br><br>
+
+    <button onclick="calculateSalary()">Tính lương</button><br>
+
+    <h3>Lương tổng: <span id="totalSalary">0</span> VNĐ</h3>
+</div>
+
+<script>
+    function calculateSalary() {
+        let morningHours = document.getElementById('morningHours').value;
+        let afternoonHours = document.getElementById('afternoonHours').value;
+        let nightHours = document.getElementById('nightHours').value;
+        let experience = document.getElementById('experience').value;
+
+        if (!morningHours || !afternoonHours || !nightHours || !experience) {
+            alert("Vui lòng nhập đầy đủ thông tin.");
+            return;
+        }
+
+        morningHours = parseFloat(morningHours);
+        afternoonHours = parseFloat(afternoonHours);
+        nightHours = parseFloat(nightHours);
+        experience = parseFloat(experience);
+
+        if (morningHours < 0 || afternoonHours < 0 || nightHours < 0 || experience < 0) {
+            alert("Giá trị nhập vào không thể âm.");
+            return;
+        }
+
+        const morningRate = 50000;
+        const afternoonRate = 55000;
+        const nightRate = 70000;
+        const overtimeBonus = 1.2;
+
+        let totalHours = morningHours + afternoonHours + nightHours;
+        let baseSalary = (morningHours * morningRate) + (afternoonHours * afternoonRate) + (nightHours * nightRate);
+
+        if (totalHours > 8) {
+            let overtimeHours = totalHours - 8;
+            baseSalary += (overtimeHours * morningRate * overtimeBonus);
+        }
+
+        let seniorityBonus = 0;
+        if (experience >= 1 && experience <= 3) {
+            seniorityBonus = 0.05;
+        } else if (experience > 3) {
+            seniorityBonus = 0.10;
+        }
+
+        let totalSalary = baseSalary * (1 + seniorityBonus);
+        document.getElementById('totalSalary').innerText = totalSalary.toLocaleString('vi-VN');
+    }
+</script>
+</body>
+</html>
